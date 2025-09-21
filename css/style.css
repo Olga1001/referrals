@@ -206,6 +206,7 @@ body {
     position: relative;
     z-index: 1;
     padding: 16px;
+    margin-bottom: 9px;
 }
 
 .referrals__header:before,
@@ -239,7 +240,7 @@ body {
 
 /* app__header */
 .app__header {
-    padding: 9px 24px;
+    padding: 0 24px;
     color: var(--c-white);
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
@@ -324,10 +325,11 @@ body {
     font-weight: 400;
     gap: 8px;
     display: grid;
+    padding-top: 15px;
 }
 
 .referrals__block {
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(77, 58, 58, 0.3);
     padding: 20px;
     border: 1px solid #606062;
     border-radius: 16px;
@@ -596,10 +598,7 @@ td.list__table-date {
         font-size: 5.65vw;
     }
 
-    .app__header {
-        padding: 9px 12px;
-    }
-
+    .app__header,
     ._container {
         padding: 0px 12px;
     }

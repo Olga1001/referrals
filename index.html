@@ -25,7 +25,7 @@
             </header>
             <header class="app__header">
                 <button type="button" class="app__header-left">
-                    <img src="../img/avatar.png" alt="avatar" class="app__header-avatar">
+                    <img src="/img/avatar.png" alt="avatar" class="app__header-avatar">
                 </button>
                 <div class="app__header-center">
                     <p>LVL 7/10</p>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="app__header-right">
-                    <img src="../img/star.svg" alt="avatar" class="app__header-star">
+                    <img src="/img/star.svg" alt="avatar" class="app__header-star">
                     <p class="app__header-value text-gradient">36</p>
                 </div>
             </header>
@@ -62,7 +62,7 @@
                             <p>Total Earnings: <span>24567 RPR</span></p>
                         </div>
                     </div>
-                    <img src="../img/graph-circle.svg" alt="graph" class="earnings__icon">
+                    <img src="/img/graph-circle.svg" alt="graph" class="earnings__icon">
                 </div>
 
                 <div class="referrals__list list">
@@ -166,8 +166,6 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        alert(tg, tg.initDataUnsafe?.user);
-
         // graph
         function setGraph(id, dataColum, dataPoint, categories) {
             const wrapper = document.getElementById(id);
@@ -188,5 +186,4 @@
         setGraph("graph__wrapper", [100, 60, 70, 43, 90, 70, 80], [43, 43, 43, 43, 43, 43, 43],  ['M', 'T', 'W', 'T', 'F', 'S', 'S']);
     </script>
 </body>
-
 </html>

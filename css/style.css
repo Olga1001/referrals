@@ -323,9 +323,12 @@ body {
 .referrals {
     color: var(--c-white);
     font-weight: 400;
+    padding: 15px 0;
+}
+
+.referrals ._container {
     gap: 8px;
     display: grid;
-    padding-top: 15px!important;
 }
 
 .referrals__block {

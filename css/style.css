@@ -325,7 +325,7 @@ body {
     font-weight: 400;
     gap: 8px;
     display: grid;
-    padding-top: 15px;
+    padding-top: 15px!important;
 }
 
 .referrals__block {

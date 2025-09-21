@@ -616,10 +616,10 @@ td.list__table-date {
         font-size: 12px;
     }
 
-    td.list__table-date {
-        font-size: 11px;
+    .list__table-date {
+        padding-left: 6px;
     }
-
+    
     .list__table-earned {
         font-size: 13px;
     }

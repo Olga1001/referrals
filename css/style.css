@@ -478,11 +478,6 @@ body {
     color: var(--c-white)
 }
 
-.earnings__icon {
-    width: 52px;
-    height: 52px;
-}
-
 .earnings__circle {
     width: 12px;
     height: 12px;
@@ -619,7 +614,7 @@ td.list__table-date {
     .list__table-date {
         padding-left: 6px;
     }
-    
+
     .list__table-earned {
         font-size: 13px;
     }

@@ -63,7 +63,7 @@
                                 <p>Total Earnings: <span>24567 RPR</span></p>
                             </div>
                         </div>
-                        <img src="/referrals/img/graph-circle.svg" alt="graph" class="earnings__icon">
+                        <svg class="earnings__icon" id="donutChart" viewBox="0 0 52 52" width="52" height="52" fill="none"></svg>
                     </div>
 
                     <div class="referrals__list list">
@@ -168,7 +168,7 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // graph
+        // set graph
         function setGraph(id, dataColum, dataPoint, categories) {
             const wrapper = document.getElementById(id);
             wrapper.innerHTML = `<div class="graph__line"></div>`;
@@ -186,6 +186,122 @@
         }
 
         setGraph("graph__wrapper", [100, 60, 70, 43, 90, 70, 80], [43, 43, 43, 43, 43, 43, 43], ['M', 'T', 'W', 'T', 'F', 'S', 'S']);
+        
+        // set donut chart
+        function setDonutChart(svgId, dataPer, dataColors) {
+            const svg = document.getElementById(svgId);
+            svg.innerHTML = '';
+
+            // <defs> контейнер
+            const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            svg.appendChild(defs);
+
+            // градієнт для бордера
+            const borderGrad = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+            borderGrad.setAttribute("id", "paint0_linear_509_104");
+            borderGrad.setAttribute("x1", "56.4039");
+            borderGrad.setAttribute("y1", "-1.38879e-06");
+            borderGrad.setAttribute("x2", "-9.04698");
+            borderGrad.setAttribute("y2", "58.99");
+            borderGrad.setAttribute("gradientUnits", "userSpaceOnUse");
+
+            const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+            stop1.setAttribute("stop-color", "#FD7F66");
+            borderGrad.appendChild(stop1);
+
+            const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+            stop2.setAttribute("offset", "1");
+            stop2.setAttribute("stop-color", "#F4D35E");
+            borderGrad.appendChild(stop2);
+
+            defs.appendChild(borderGrad);
+
+            // бордерне коло
+            const borderCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            borderCircle.setAttribute("cx", "26");
+            borderCircle.setAttribute("cy", "26");
+            borderCircle.setAttribute("r", "25.5");
+            borderCircle.setAttribute("stroke", "url(#paint0_linear_509_104)");
+            borderCircle.setAttribute("fill", "none");
+            svg.appendChild(borderCircle);
+
+            // логіка сегментів
+            const cx = 26, cy = 26; 
+            const outerR = 26;          
+            const innerR = 0;    
+
+            const total = dataPer.reduce((a, b) => a + b, 0);
+            let startAngle = 4.5;
+
+            dataPer.forEach((value, i) => {
+                let endAngle = startAngle + (value / total) * 2 * Math.PI;
+
+                const angle1 = startAngle;
+                const angle2 = endAngle;
+
+                if (angle2 <= angle1) {
+                    startAngle = endAngle;
+                    return;
+                }
+
+                // точки зовнішньої дуги
+                const x1 = cx + outerR * Math.cos(angle1);
+                const y1 = cy + outerR * Math.sin(angle1);
+                const x2 = cx + outerR * Math.cos(angle2);
+                const y2 = cy + outerR * Math.sin(angle2);
+
+                // точки внутрішньої дуги
+                const x3 = cx + innerR * Math.cos(angle2);
+                const y3 = cy + innerR * Math.sin(angle2);
+                const x4 = cx + innerR * Math.cos(angle1);
+                const y4 = cy + innerR * Math.sin(angle1);
+
+                const largeArc = (angle2 - angle1) > Math.PI ? 1 : 0;
+
+                const d = `
+                M ${x1} ${y1}
+                A ${outerR} ${outerR} 0 ${largeArc} 1 ${x2} ${y2}
+                L ${x3} ${y3}
+                A ${innerR} ${innerR} 0 ${largeArc} 0 ${x4} ${y4}
+                Z
+                `;
+
+                // Якщо колір — це градієнт
+                let fillValue = dataColors[i % dataColors.length];
+                if (fillValue.includes("/")) {
+                    const [c1, c2] = fillValue.split("/");
+                    const gradId = `grad_${svgId}_${i}`;
+                    const grad = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+                    grad.setAttribute("id", gradId);
+                    grad.setAttribute("x1", "32.4039");
+                    grad.setAttribute("y1", "-1.38879e-06");
+                    grad.setAttribute("x2", "-33.047");
+                    grad.setAttribute("y2", "58.99");
+                    grad.setAttribute("gradientUnits", "userSpaceOnUse");
+
+                    const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+                    stop1.setAttribute("stop-color", c1);
+                    grad.appendChild(stop1);
+
+                    const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+                    stop2.setAttribute("offset", "1");
+                    stop2.setAttribute("stop-color", c2);
+                    grad.appendChild(stop2);
+
+                    defs.appendChild(grad);
+                    fillValue = `url(#${gradId})`;
+                }
+
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", d);
+                path.setAttribute("fill", fillValue);
+                svg.appendChild(path);
+
+                startAngle = endAngle;
+            });
+        }
+
+        setDonutChart("donutChart", [7, 80], ["#FD7F66/#F4D35E", "none"]);
     </script>
 </body>
 
